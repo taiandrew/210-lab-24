@@ -25,7 +25,21 @@ public:
     void set_color(string c)        { color = c; }
     string get_color() const        { return color; }
 
-    // write overloaded < operator for the std::list
+    // write overloaded < operator for the std::set
+    bool operator<(const Goat& other) const {
+        // Lexicographic comparison: 1) name 2) age 3) color
+
+        if (name < other.name) return true;
+        if (name > other.name) return false;
+
+        if (age < other.age) return true;
+        if (age > other.age) return false;
+
+        if (color < other.color) return true;
+        if (color > other.color) return false;
+
+        return false;   // Equal
+    }
 };
 
 #endif
