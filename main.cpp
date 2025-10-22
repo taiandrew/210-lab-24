@@ -4,17 +4,17 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <list>
+#include <set>
 #include "Goat.h"
 using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
 // FN PROTOTYPES
-int select_goat(list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(list<Goat> trip);
+int select_goat(set<Goat> trip);
+void delete_goat(set<Goat> &trip);
+void add_goat(set<Goat> &trip, string [], string []);
+void display_trip(set<Goat> trip);
 int main_menu();
 
 // MAIN
@@ -35,7 +35,7 @@ int main() {
     fin1.close();
 
     // menu loop
-    list<Goat> trip;
+    set<Goat> trip;
     int choice;
 
     while (true) {
@@ -57,24 +57,24 @@ int main() {
 }
 
 // PROGRAMMER FUNCTIONS
-void add_goat(list<Goat> &trip, string names[], string colors[]) {
+void add_goat(set<Goat> &trip, string names[], string colors[]) {
     // Adds a goat with random traits
     // Args:
-    //   trip - reference to list of goats
+    //   trip - reference to set of goats
     //   names - array of possible names
     //   colors - array of possible colors
 
     string name = names[rand() % SZ_NAMES];
     int age = rand() % (MAX_AGE + 1); // age 0 to MAX_AGE
     string color = colors[rand() % SZ_COLORS];
-    trip.push_back(Goat(name, age, color));
+    trip.insert(Goat(name, age, color));
 }
 
-void display_trip(list<Goat> trip) {
+void display_trip(set<Goat> trip) {
     // Displays goats in the trip; numbered "index"
-    // Arg: reference to list of goats
+    // Arg: reference to set of goats
 
-    list<Goat>::iterator it;
+    set<Goat>::iterator it;
     int index = 0;
     for (it = trip.begin(); it != trip.end(); ++it) {
         cout << "[" << index << "] ";
@@ -86,9 +86,9 @@ void display_trip(list<Goat> trip) {
     cout << endl;
 }
 
-int select_goat(list<Goat> trip) {
+int select_goat(set<Goat> trip) {
     // Displays goats and prompts user to select one
-    // Arg: list of goats
+    // Arg: set of goats
     // Returns: index of selected goat (0 indexed)
 
     display_trip(trip);
@@ -107,12 +107,12 @@ int select_goat(list<Goat> trip) {
     return input;
 }
 
-void delete_goat(list<Goat> &trip) {
+void delete_goat(set<Goat> &trip) {
     // Deletes a goat from the trip via iterator; calls select_goat()
-    // Arg: reference to list of goats
+    // Arg: reference to set of goats
 
     int index = select_goat(trip);
-    list<Goat>::iterator it = trip.begin();
+    set<Goat>::iterator it = trip.begin();
     for (int i = 0; i < index; i++) {
         ++it;
     }
