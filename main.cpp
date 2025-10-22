@@ -67,7 +67,16 @@ void add_goat(set<Goat> &trip, string names[], string colors[]) {
     string name = names[rand() % SZ_NAMES];
     int age = rand() % (MAX_AGE + 1); // age 0 to MAX_AGE
     string color = colors[rand() % SZ_COLORS];
-    trip.insert(Goat(name, age, color));
+
+    auto result = trip.insert(Goat(name, age, color));
+
+    // Unlikely, but if randomly generated goat exists
+    if (!result.second) {
+        cout << "Goat already exists, not added." << endl;
+        return;
+    }
+    cout << "Added goat: " << name << " (" << age << ", " << color << ")\n" << endl;
+    return;
 }
 
 void display_trip(set<Goat> trip) {
@@ -94,7 +103,7 @@ int select_goat(set<Goat> trip) {
     display_trip(trip);
     int input;
     do {
-        cout << "Select goat to delete: ";
+        cout << "Select goat: ";
         cin >> input;
 
         // Validation
@@ -111,6 +120,7 @@ void delete_goat(set<Goat> &trip) {
     // Deletes a goat from the trip via iterator; calls select_goat()
     // Arg: reference to set of goats
 
+    cout << "'Deleting' goat..." << endl;
     int index = select_goat(trip);
     set<Goat>::iterator it = trip.begin();
     for (int i = 0; i < index; i++) {
